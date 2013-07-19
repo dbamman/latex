@@ -1,4 +1,4 @@
 latex
 =====
 
-LaTex examples
+LaTeX examples
