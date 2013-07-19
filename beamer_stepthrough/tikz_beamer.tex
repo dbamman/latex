@@ -1,0 +1,81 @@
+\documentclass{beamer}
+%\documentclass[handout]{beamer} % collapse slides
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,backgrounds}
+\usepackage{tikzmacro}
+
+\setbeamertemplate{itemize items}[circle]
+
+\setbeamertemplate{navigation symbols}{} 
+
+\newcommand{\newplate}[4]{
+	\node (invis#1) [draw, color=white, inner sep=3pt,rectangle,fit=#2] {};
+	\node (capt#1) [ below left=0 pt of invis#1.south east, xshift=2pt,yshift=1pt] {\footnotesize{#3}};
+	\node (#1) [draw,inner sep=0pt, rectangle,fit=(invis#1) (capt#1),#4] {};
+}
+
+\begin{document}
+
+\begin{frame}
+\frametitle{LDA}
+\setbeamercovered{invisible}
+
+\begin{columns}[c]
+
+
+\column{0.5\textwidth}
+
+\begin{center}
+\begin{figure}
+\begin{tikzpicture}
+\node (z) [latent] {$z$}; \pause
+\node (w) [obs,  below=15pt of z] {$w$}; 
+\draw [->] (z) -- (w); \pause
+
+\newplate{words}{(w)(z)}{$W$}{}; \pause
+
+\node (theta) [latent,  above=15pt of z] {$\theta$}; 
+\draw [->] (theta) -- (z); \pause
+
+\newplate{docs}{(words)(theta)}{$D$}{}; \pause
+
+
+\node (phi) [latent,  left=15pt of w] {$\phi$}; 
+\draw [->] (phi) -- (w);  \pause
+
+
+\node (alpha) [latent,  above=15pt of theta] {$\alpha$}; 
+\draw [->] (alpha) -- (theta);  \pause
+
+\node (gamma) [latent,  above=15pt of phi] {$\gamma$}; 
+\draw [->] (gamma) -- (phi); 
+
+\end{tikzpicture}
+\end{figure}
+
+\end{center}
+
+\column{0.5\textwidth}
+\footnotesize
+
+\begin{itemize}
+\item \onslide<1-> {$z$ = topic for one word}
+\item \onslide<2-> {$w$ = word token}
+\item \onslide<3-> {$W$ plate = multiple words}
+\item \onslide<4-> {$\theta$ = document-topic proportions}
+\item \onslide<5-> {$D$ plate = multiple documents}
+\item \onslide<6-> {$\phi$ = word-topic distribution}
+\item \onslide<7-> {$\alpha$ = Dirichlet prior}
+\item \onslide<8-> {$\gamma$ = Dirichlet prior}
+\end{itemize}
+
+\end{columns}
+
+\end{frame}
+
+
+\end{document}
+
+
+
